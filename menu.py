@@ -16,10 +16,11 @@ class TrainNext(rumps.App):
         self.icon="./icon.png"
         #self.menu=["hoge","huga"]
 
-    @ rumps.timer(30)
+    @ rumps.timer(20)
     def chk_now_time(self,sender):
-        print("hoge")
-        now = datetime.today()
+        print("start check")
+        now = datetime.today()+timedelta(minutes=5)
+        print("now+5min",now)
         today = date.today()
         hour = now.hour
         minute = now.minute
@@ -31,8 +32,6 @@ class TrainNext(rumps.App):
             weekday = (now-timedelta(days=1)).weekday()
         else:
             weekday = now.weekday()
-
-        print("huga")
         if(jpholiday.is_holiday(today)):
             weekday = 6 # 祝日の場合,祝日ダイヤにする
 
@@ -43,12 +42,13 @@ class TrainNext(rumps.App):
         else:
             today_list = wd_list
         #print(today_list)
-        first = chk_train(today_list,hour,minute+5)
-        print("getfirst")
+        first = chk_train(today_list,hour,minute)
+        print("getfirst",first)
         second = chk_train(today_list,first[1],first[2]+1)
+        print("getsecond",second)
         third = chk_train(today_list,second[1],second[2]+1)
-        print(first[2],second,third)
-        self.title = ("  "+str(first[2])+" "+str(first[3]))
+        print("getthird",third)
+        self.title = (" "+str(first[2])+" "+str(first[3]))
         self.menu["その次の電車"].clear()
         self.menu["その次の電車"].add(str(second[1])+":"+str(second[2])+" "+str(second[3]))
         self.menu["その次の電車"].add(str(third[1])+":"+str(third[2])+" "+str(third[3]))
@@ -68,13 +68,11 @@ class TrainNext(rumps.App):
         # なので0~3時までは前日の時刻表を参照する
 
 def chk_train(list,hour,minute):
-    print("piyo")
     for train in list:
         if train[1] < hour:
             continue
         if train[1] == hour and train[2] < minute:
             continue
-        print("a",end = " ")
         return train
     return None
 if __name__ == "__main__":
