@@ -19,7 +19,7 @@ class TrainNext(rumps.App):
     @ rumps.timer(20)
     def chk_now_time(self,sender):
         print("start check")
-        now = datetime.today()+timedelta(minutes=5)
+        now = datetime.today() + timedelta(minutes = 5)
         print("now+5min",now)
         today = date.today()
         hour = now.hour
@@ -27,7 +27,7 @@ class TrainNext(rumps.App):
          # [0-6],[月-日]
         #表示するダイヤを決定
 
-        if 0 <= hour <= 2:
+        if 0 <= hour < 2:
             hour += 24
             weekday = (now-timedelta(days=1)).weekday()
         else:
@@ -44,15 +44,22 @@ class TrainNext(rumps.App):
         #print(today_list)
         first = chk_train(today_list,hour,minute)
         print("getfirst",first)
-        second = chk_train(today_list,first[1],first[2]+1)
-        print("getsecond",second)
-        third = chk_train(today_list,second[1],second[2]+1)
-        print("getthird",third)
-        self.title = (" "+str(first[2])+" "+str(first[3]))
         self.menu["その次の電車"].clear()
-        self.menu["その次の電車"].add(str(second[1])+":"+str(second[2])+" "+str(second[3]))
-        self.menu["その次の電車"].add(str(third[1])+":"+str(third[2])+" "+str(third[3]))
-
+        if first is None:
+            self.menu["その次の電車"].add("なし")
+            self.title = (" ")
+        else:
+            second = chk_train(today_list,first[1],first[2])
+            print("getsecond",second)
+            if second is not None:
+                self.menu["その次の電車"].add(str(second[1])+":"+str(second[2])+" "+str(second[3]))
+                third = chk_train(today_list,second[1],second[2])
+                print("getthird",third)
+                if third is not None:
+                    self.menu["その次の電車"].add(str(third[1])+":"+str(third[2])+" "+str(third[3]))
+            else:
+                self.menu["その次の電車"].add("なし")
+            self.title = (" "+str(first[2])+" "+str(first[3]))
 
 
 
@@ -71,7 +78,7 @@ def chk_train(list,hour,minute):
     for train in list:
         if train[1] < hour:
             continue
-        if train[1] == hour and train[2] < minute:
+        if train[1] == hour and train[2] <= minute:
             continue
         return train
     return None
