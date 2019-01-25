@@ -22,6 +22,10 @@ python3.7で動作確認
 ## セットアップ
 まず，webDriver.py内の変数を各自の環境に合わせて設定
 
+時刻表のURLはYahoo路線情報を利用
+
+[例:東京駅 ＪＲ東海道本線 品川・横浜方面　- Yahoo!路線情報](https://transit.yahoo.co.jp/station/time/22828/?kind=1&gid=1171&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time)
+
 また，必要に応じてmenu.pyの時間も変更を
 
 使用前に起動時に表示するアイコンをicon.pngとしてmenu.pyと同じ階層に追加すること！
