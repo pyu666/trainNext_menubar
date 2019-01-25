@@ -9,16 +9,15 @@ weekday_List,saturday_List,holiday_List = [],[],[]
 #[00時00分からの経過時間,時,分,行き先,列車種別]のリストが生成
 
 # 平日のURL
-weekday_URL = "https://transit.yahoo.co.jp/station/time/22630/?kind=1&gid=991&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time"
+weekday_URL = "https://transit.yahoo.co.jp/station/time/22828/?gid=1171&pref=13&done=time"
 # 土曜日のURL
-saturday_URL = "https://transit.yahoo.co.jp/station/time/22630/?kind=2&gid=991&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time%22"
+saturday_URL = "https://transit.yahoo.co.jp/station/time/22828/?kind=2&gid=1171&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time"
 # 休日（祝日）のURL
-holiday_URL = "https://transit.yahoo.co.jp/station/time/22630/?kind=4&gid=991&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time%22"
+holiday_URL = "https://transit.yahoo.co.jp/station/time/22828/?kind=4&gid=1171&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time"
 # 列車種別．列車名が無印の場合に代入する文字
-noneType_for = "取"
-# 行き先・経由が無印の場合に代入する文字
 noneType_type = "普"
-
+# 行き先・経由が無印の場合に代入する文字
+noneType_for = "品"
 # 平日，土休日によってURL変更
 def main():
     #ダイヤごとにリスト作成，処理
