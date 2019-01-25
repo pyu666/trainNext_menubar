@@ -8,12 +8,12 @@ Usage:
 from setuptools import setup
 
 APP = ['menu.py']
-DATA_FILES = ["./icon.png"]
+DATA_FILES = ['./icon.png']
 APP_NAME = 'QuickIR'
 OPTIONS = {
 'includes': ['webDriver', 'jpholiday','BeautifulSoup','requests'],
     'argv_emulation': False,
-    'iconfile': 'trainNext.icns',
+    'iconfile': 'icon.icns',
     'plist': {
         'LSUIElement': True    },
     'packages': ['rumps','webDriver', 'jpholiday','BeautifulSoup','requests',"datetime",'re'],

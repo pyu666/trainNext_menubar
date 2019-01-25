@@ -15,13 +15,15 @@ class TrainNext(rumps.App):
         self.menu["その次の電車"].add("なし")
         self.enable_text = False
         self.icon="./icon.png"
-
+    #20秒毎に更新
     @ rumps.timer(20)
-    #20秒毎にアップデート
     def chk_now_time(self,sender):
         print("start check")
+
+        # 標準では5分後，各自変更を
         now = datetime.today() + timedelta(minutes = 5)
-        print("now+5min",now)
+
+        print("now + 5min ",now)
         today = date.today()
         hour = now.hour
         minute = now.minute
@@ -49,6 +51,7 @@ class TrainNext(rumps.App):
 
         #clear しないと増え続ける
         #以下冗長な表現，できれば修正するべき
+        #chk_trainの返却値は[00時00分からの経過時間,時,分,行き先,列車種別]
         self.menu["その次の電車"].clear()
         if first is None:
             self.menu["その次の電車"].add("なし")
@@ -67,19 +70,6 @@ class TrainNext(rumps.App):
             self.title = (str(first[1]).zfill(2)+":"+str(first[2]).zfill(2)+"  "+str(first[3]))
 
 
-
-#    @ rumps.timer(1)
-#    def update(self,_):
-#        print("hoge")
-#        chk_now_time()
-#        self.title = str(first)
-#        self.menu = [str(second), str(third)]
-
-    # 終電までは日付変わってもそのままにしなければならない！
-        # 日本一遅い終電は1時台，日本一は早い始発は4時台
-        # なので0~3時までは前日の時刻表を参照する
-
-
 #次の列車を検索
 def chk_train(list,hour,minute):
     for train in list:
@@ -89,6 +79,8 @@ def chk_train(list,hour,minute):
             continue
         return train
     return None
+
+
 if __name__ == "__main__":
 
     wd_list = webDriver.weekday_List
