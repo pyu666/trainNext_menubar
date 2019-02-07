@@ -11,12 +11,10 @@ APP = ['menu.py']
 DATA_FILES = ['./icon.png']
 APP_NAME = 'nextTrain'
 OPTIONS = {
-'includes': ['webDriver', 'jpholiday','BeautifulSoup','requests'],
     'argv_emulation': False,
     'iconfile': 'icon.icns',
     'plist': {
         'LSUIElement': True    },
-    'packages': ['rumps','webDriver', 'jpholiday','BeautifulSoup','requests',"datetime",'re'],
 }
 setup(
     app=APP,
