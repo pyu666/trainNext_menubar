@@ -42,7 +42,7 @@ py2app を利用してアプリ化
 
 icon.png(アプリに表示されるアイコン)およびicon.icns(アプリ本体のアイコンセット)を各自追加
 
-`python menu.py py2app`
+`python setup.py py2app`
 
 で作成完了
 完成したmenu.appをダブルクリックし，起動
