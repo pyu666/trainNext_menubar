@@ -9,7 +9,7 @@ from setuptools import setup
 
 APP = ['menu.py']
 DATA_FILES = ['./icon.png']
-APP_NAME = 'QuickIR'
+APP_NAME = 'nextTrain'
 OPTIONS = {
 'includes': ['webDriver', 'jpholiday','BeautifulSoup','requests'],
     'argv_emulation': False,
