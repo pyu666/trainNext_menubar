@@ -15,7 +15,7 @@ saturday_URL = "https://transit.yahoo.co.jp/station/time/22630/?kind=2&gid=991&p
 # 休日（祝日）のURL
 holiday_URL = "https://transit.yahoo.co.jp/station/time/22630/?kind=4&gid=991&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time%22"
 # 運行情報のURL
-info_URL = "https://transit.yahoo.co.jp/traininfo/detail/40/0/"
+info_URL = "https://transit.yahoo.co.jp/traininfo/detail/57/0/"
 # 列車種別．列車名が無印の場合に代入する文字
 noneType_for = "取"
 # 行き先・経由が無印の場合に代入する文字
