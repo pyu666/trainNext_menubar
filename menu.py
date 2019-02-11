@@ -29,9 +29,8 @@ class TrainNext(rumps.App):
         print("start check")
 
         # 標準では5分後，各自変更を
-        now = datetime.today() + timedelta(minutes = 5)
-
-        print("now + 5min ",now)
+        now = datetime.today() + timedelta(minutes = 2)
+        print("now + 2min ",now)
         today = date.today()
         hour = now.hour
         minute = now.minute
