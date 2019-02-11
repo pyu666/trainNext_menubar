@@ -6,16 +6,24 @@ import jpholiday
 
 
 class TrainNext(rumps.App):
+    info=["a","b"]
     def __init__(self):
         #初期設定
         super(TrainNext, self).__init__("TrainNext")
         rumps.debug_mode(True)
-        self.menu = ["その次の電車"]
-        self.menu["その次の電車"].add("なし")
-        self.menu["その次の電車"].add("なし")
+        self.menu = ["そのつぎ"]
+        self.menu["そのつぎ"].add("なし")
+        self.menu["そのつぎ"].add("なし")
+        self.menu = ["運行情報"]
+        self.menu["運行情報"].add("未取得")
         self.enable_text = False
         self.icon="./icon.png"
     #20秒毎に更新
+
+    def hoge(self,sender):
+        print("hugahuga")
+
+
     @ rumps.timer(20)
     def chk_now_time(self,sender):
         print("start check")
@@ -52,23 +60,51 @@ class TrainNext(rumps.App):
         #clear しないと増え続ける
         #以下冗長な表現，できれば修正するべき
         #chk_trainの返却値は[00時00分からの経過時間,時,分,行き先,列車種別]
-        self.menu["その次の電車"].clear()
+        self.menu["そのつぎ"].clear()
         if first is None:
-            self.menu["その次の電車"].add("なし")
+            self.menu["そのつぎ"].add("なし")
             self.title = (" ")
         else:
             second = chk_train(today_list,first[1],first[2])
             print("次発",second)
             if second is not None:
-                self.menu["その次の電車"].add(str(second[1]).zfill(2)+":"+str(second[2]).zfill(2)+" "+str(second[3]))
+                self.menu["そのつぎ"].add(str(second[1]).zfill(2)+":"+str(second[2]).zfill(2)+" "+str(second[3]))
                 third = chk_train(today_list,second[1],second[2])
                 print("次々発",third)
                 if third is not None:
-                    self.menu["その次の電車"].add(str(third[1]).zfill(2)+":"+str(third[2]).zfill(2)+" "+str(third[3]))
+                    self.menu["そのつぎ"].add(str(third[1]).zfill(2)+":"+str(third[2]).zfill(2)+" "+str(third[3]))
             else:
-                self.menu["その次の電車"].add("なし")
+                self.menu["そのつぎ"].add("なし")
+
+            for i in self.menu["そのつぎ"].values():
+                i.set_callback(hoge)
+
             self.title = (str(first[1]).zfill(2)+":"+str(first[2]).zfill(2)+"  "+str(first[3]))
 
+
+
+    @ rumps.timer(60)
+    def chk_trainfo(self,sender):
+        global info
+        print("start check train info")
+        info = list(webDriver.get_trainfo())
+        print("get train info")
+        self.menu["運行情報"].clear()
+        self.menu["運行情報"].add(info[0])
+        self.menu["運行情報"][info[0]].set_callback(hoge)
+        if info[1] is not None:
+            self.menu["運行情報"].add(info[1])
+            self.menu["運行情報"][info[1]].set_callback(hoge)
+        print(info)
+
+    def printer():
+        print("hogehoge")
+        self.alert("hoge")
+
+def hoge():
+    print("huga")
+    TrainNext.printer()
+    #ramps.alert("hoge")
 
 #次の列車を検索
 def chk_train(list,hour,minute):
@@ -79,6 +115,7 @@ def chk_train(list,hour,minute):
             continue
         return train
     return None
+
 
 
 if __name__ == "__main__":
