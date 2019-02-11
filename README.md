@@ -5,11 +5,12 @@
 
 また，その後2本の列車も確認可能
 
-![](スクリーンショット.png)
+![](スクリーンショット1.png)
+![](スクリーンショット2.png)
 
 
 ## 環境
-python3.7で動作確認
+python3.7 & MacOS Mojave で動作確認
 内容的には以下のライブラリが動作する環境ならば動作するはず
 
 + rumps
@@ -26,10 +27,10 @@ python3.7で動作確認
 
 [例:東京駅 ＪＲ東海道本線 品川・横浜方面　- Yahoo!路線情報](https://transit.yahoo.co.jp/station/time/22828/?kind=1&gid=1171&pref=13&prefname=%E6%9D%B1%E4%BA%AC&tab=time&done=time)
 
-また，必要に応じてmenu.pyの時間も変更を
+運行情報も同様に変更を
+[例:東海道本線(東京～熱海)- Yahoo!路線情報](https://transit.yahoo.co.jp/traininfo/detail/27/0/)
 
-使用前に起動時に表示するアイコンをicon.pngとしてmenu.pyと同じ階層に追加すること！
-
+また，必要に応じてmenu.pyの時間も変更(標準では2分後時点での時刻を表示)
 
 ## 使い方
 
