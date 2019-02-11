@@ -8,6 +8,7 @@ Usage:
 from setuptools import setup
 
 APP = ['menu.py']
+
 DATA_FILES = ['icon.png','icon.icns']
 APP_NAME = 'nextTrain'
 #'includes': ['webDriver', 'jpholiday','requests'],
@@ -19,6 +20,7 @@ OPTIONS = {
         'LSUIElement': True    },
     }
     #'packages': ['rumps','webDriver', 'jpholiday','BeautifulSoup4','requests',"datetime",'re'],
+
 
 setup(
     app=APP,
