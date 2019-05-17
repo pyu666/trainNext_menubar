@@ -70,9 +70,11 @@ def judge_detail(data):
         return None
     else:
         #start = data.find(list("した","での","で"))+2
-        start = re.search("した|での|で",data).end()
+        start = re.search("した|での|で",data)
         if start is None:
             start=0
+        else:
+            start = start.end()
         end = data.find("影響")
         return data[start:end+2]
 
