@@ -20,7 +20,7 @@ class TrainNext(rumps.App):
         self.icon="./icon.png"
     #20秒毎に更新
 
-    def hoge(self,sender):
+    def huga(self,sender):
         print("hugahuga")
 
 
@@ -29,7 +29,7 @@ class TrainNext(rumps.App):
         print("start check")
 
         # 標準では5分後，各自変更を
-        now = datetime.today() + timedelta(minutes = 2)
+        now = datetime.today() + timedelta(minutes = 3)
         print("now + 2min ",now)
         today = date.today()
         hour = now.hour
@@ -96,11 +96,11 @@ class TrainNext(rumps.App):
             self.menu["運行情報"][info[1]].set_callback(hoge)
         print(info)
 
-    def printer():
+    def printer(self,sender):
         print("hogehoge")
         self.alert("hoge")
 
-def hoge():
+def hoge(self,sender):
     print("huga")
     TrainNext.printer()
     #ramps.alert("hoge")
