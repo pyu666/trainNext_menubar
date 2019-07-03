@@ -4,6 +4,7 @@ from datetime import datetime, date, timedelta, time
 import webDriver
 import jpholiday
 
+wd_list,sd_list,hd_list = [],[],[]
 
 class TrainNext(rumps.App):
     info=["a","b"]
@@ -26,10 +27,19 @@ class TrainNext(rumps.App):
 
     @ rumps.timer(20)
     def chk_now_time(self,sender):
+        global wd_list,sd_list,hd_list
+        if webDriver.is_network_connection == False:
+            is_network_connection = webDriver.check_network(1)
+            return
+        if webDriver.is_network_connection and webDriver.is_maked_list is False:
+            webDriver.make_perse()
+
+            print(wd_list)
+
         print("start check")
 
         # 標準では5分後，各自変更を
-        now = datetime.today() + timedelta(minutes = 3)
+        now = datetime.today() + timedelta(minutes = 2)
         print("now + 2min ",now)
         today = date.today()
         hour = now.hour
@@ -84,6 +94,8 @@ class TrainNext(rumps.App):
 
     @ rumps.timer(60)
     def chk_trainfo(self,sender):
+        if webDriver.check_network(1) == False:
+            return
         global info
         print("start check train info")
         info = list(webDriver.get_trainfo())
@@ -116,12 +128,15 @@ def chk_train(list,hour,minute):
     return None
 
 
-
-if __name__ == "__main__":
-
+def get_lists():
+    global wd_list,sd_list,hd_list
     wd_list = webDriver.weekday_List
     sd_list = webDriver.saturday_List
     hd_list = webDriver.holiday_List
+if __name__ == "__main__":
+
+    get_lists()
     #print(hd_list)
+
     app = TrainNext()
     app.run()

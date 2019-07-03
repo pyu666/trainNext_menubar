@@ -2,7 +2,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import datetime
-
+import time
 
 weekday_List,saturday_List,holiday_List = [],[],[]
 
@@ -21,13 +21,47 @@ noneType_for = "取"
 # 行き先・経由が無印の場合に代入する文字
 noneType_type = "普"
 
+is_network_connection = False
+
+is_maked_list = False
+
 # 平日，土休日によってURL変更
 def main():
-    #ダイヤごとにリスト作成，処理
+	#ダイヤごとにリスト作成，処理
+    check_network(1)
+    global is_network_connection, weekday_List,saturday_List,holiday_List
+    if is_network_connection:
+        make_perse()
+        print(get_trainfo())
+        is_network_connection = True
+    else:
+        time,hour,minute,train_for,train_type = None,0,0,"ネットワークエラー",""
+        weekday_List,saturday_List,holiday_List = [[time,hour,minute,train_for,train_type]],[[time,hour,minute,train_for,train_type]],[[time,hour,minute,train_for,train_type]]
+        print("network connection faild")
+
+def make_perse():
+    global is_maked_list, weekday_List,saturday_List,holiday_List
     perse_list(weekday_URL,weekday_List)
     perse_list(saturday_URL,saturday_List)
     perse_list(holiday_URL,holiday_List)
-    print(get_trainfo())
+    is_maked_list = True
+    print("list OK")
+    # print(weekday_List)
+
+def check_network(count):
+    global is_maked_list,is_network_connection
+    for i in range(count):
+        try:
+            html = requests.get("http://yahoo.co.jp")
+            print("network OK")
+            is_network_connection = True
+            if is_maked_list is False:
+                make_perse()
+            return True
+        except:
+            print("network disconnect retry")
+            return False
+
 
 def perse_list(html,time_list):
     html = requests.get(html)
@@ -56,13 +90,14 @@ def perse_list(html,time_list):
         time_list.append([time,hour,minute,train_for,train_type])
 
 def get_trainfo():
+
     html = requests.get(info_URL)
     soup = BeautifulSoup(html.text, "html.parser")
     sp = soup.find(id="mdServiceStatus")
     about = sp.find("dt").text
-    detail = judge_detail(sp.find("p").text)
     if "運転状況" in about:
-        about = judge_trainfo(detail)
+        about = judge_trainfo(sp.find("p").text)
+    detail = judge_detail(sp.find("p").text)
     return about,detail
 
 def judge_detail(data):
@@ -81,6 +116,7 @@ def judge_detail(data):
         return data[start:end+2]
 
 def judge_trainfo(data):
+    print(data)
     icon ="[△]"
     if "直通運転を中止" in data:
         about="直通運転中止"
@@ -94,4 +130,6 @@ def judge_trainfo(data):
     else:
         about="列車遅延"
     return icon+about
+
+
 main()
